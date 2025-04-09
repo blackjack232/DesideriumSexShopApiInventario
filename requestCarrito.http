@@ -1,0 +1,38 @@
+
+
+/////////////////////////////carrito///////////////
+
+###
+POST http://localhost:5000/api/carrito HTTP/1.1
+Content-Type: application/json
+
+{
+        "producto":[{
+            "_id":"636031d599c2c744fdd79792"
+
+        }],
+        "user":{
+             "_id":"63603436222b16b3abf5e40f"
+        }
+}
+
+###
+GET http://localhost:5000/api/carritos/636031d599c2c744fdd79792 HTTP/1.1
+
+###
+GET http://localhost:5000/api/carrito/635ad84b75326e2110bc9621 HTTP/1.1
+
+###
+DELETE http://localhost:5000/api/carrito/6137e1725461c36eba8b2ce4 HTTP/1.1
+
+###
+PUT http://localhost:5000/api/carrito/634cbfa4a8b17cc1ae1ee122 HTTP/1.1
+Content-Type: application/json
+
+{
+        "imagePath":"/aserts/lubricanteALOE.jpg",
+        "name":"Producto 1",
+        "description":"Lubricante a base de aloe vera",
+        "precio" :15000,
+        "title" : "Lubricante Aloe"
+}
