@@ -1,44 +1,32 @@
-const express = require("express");
+// index.js
+const  swaggerUI = require('swagger-ui-express');
+const swaggerSpec = require("./swagger/swagger");
+const express = require('express');
 const mongoose = require("mongoose");
-var cors = require('cors')
-require("dotenv").config();
-const userRoute = require("./src/routes/user");
-const userLogin = require('./src/routes/userLogin')
-const lenceriaRoute = require("./src/routes/lenceria");
-const productsRoute = require("./src/routes/productsRouter");
+
+require('dotenv').config();
+var cors = require('cors');
+const userLogin = require('./src/routes/userLogin');
 const categoryRoute = require("./src/routes/categoryRouter");
 const productRoute = require("./src/routes/productRouter");
 
-
-const validatetoken = require('./src/middleware/validateToken');
-const validateRol = require('./src/middleware/validateRol');
-
-
-// settings
 const app = express();
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
-// middlewares
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-app.use("/api", lenceriaRoute);
-app.use("/api", userLogin);
-// Productos viejo
-app.use("/api", productsRoute);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+
+app.get('/', (req, res) => {
+  res.send('¡Bienvenido al api de inventario Desiderium!');
+});
+
 // Productos nuevo
 app.use("/api", productRoute);
-// Usuarios
-app.use("/api/:id", userRoute);
-
 // Category
 app.use("/api", categoryRoute);
+// Login 
+app.use("/api", userLogin);
 
-
-// routes
-app.get("/", (req, res) => {
-  res.send("Bienvenido api Desiderium");
-});
 
 app.use(cors({ origin: '*' }));
 
@@ -48,5 +36,7 @@ mongoose
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((error) => console.error(error));
 
-// server listening
-app.listen(port, () => console.log("Server listening to", port));
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  });
+  
