@@ -14,7 +14,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec, { explorer: true }));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.get('/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
 app.get('/', (req, res) => {
   res.send('¡Bienvenido al api de inventario Desiderium!');
