@@ -12,6 +12,10 @@ const productRoute = require("./src/routes/productRouter");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://tu-app-en-vercel.vercel.app'],
+  credentials: true
+}));
 
 app.use(express.json());
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
@@ -30,9 +34,6 @@ app.use("/api", productRoute);
 app.use("/api", categoryRoute);
 // Login 
 app.use("/api", userLogin);
-
-
-app.use(cors({ origin: '*' }));
 
 // mongodb connection
 mongoose
